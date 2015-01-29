@@ -5,11 +5,13 @@ using System.Collections;
 public class Soldier : MonoBehaviour {
     CharacterController m_characterController;
     int m_speed;
+    bool m_isAttacking;
 
 	// Use this for initialization
 	void Start ()
     {
         m_speed = 1;
+        m_isAttacking = false;
         m_characterController = GetComponent<CharacterController>();
 	}
 	
@@ -24,8 +26,15 @@ public class Soldier : MonoBehaviour {
         if (hit.collider.CompareTag("Wall"))
         {
             m_speed = 0;
+            m_isAttacking = true;
         }
 
+    }
+
+    void SetAttacking(bool X)
+    {
+        m_isAttacking = X;
+        return;
     }
     
 }
