@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class ArmyPooler : MonoBehaviour {
 
     public GameObject soldier;
-    public int armySize = 5;
+    public AttackColumn attackInstance;
+    public int armySize = 1;
+    private float spawnTimer = 0.0f;
 
     List<GameObject> army; 
 
@@ -20,10 +22,20 @@ public class ArmyPooler : MonoBehaviour {
         }
 	}
 
+    void Update()
+    {
+        if (Time.time > spawnTimer) 
+        {
+            Spawn();
+           // spawnTimer = Time.time + 2.0f;
+        }
+    }
+
     public GameObject GetSoldier()
     {
         for (int i = 0; i < army.Count; i++)
         {
+
             if (!army[i].activeInHierarchy)
             {
                 return army[i];
@@ -31,5 +43,20 @@ public class ArmyPooler : MonoBehaviour {
         }
 
         return null;
+    }
+
+    void Spawn()
+    {
+        if (!attackInstance.isColliding)
+        {
+            GameObject obj = (GameObject)GetSoldier();
+            if (obj != null)
+            {
+                obj.transform.position = attackInstance.transform.position;
+                obj.transform.rotation = attackInstance.transform.rotation;
+                obj.SetActive(true);
+                return;
+            }
+        }
     }
 }

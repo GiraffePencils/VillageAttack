@@ -18,6 +18,10 @@ public class Soldier : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+        if (gameObject.activeInHierarchy) 
+        {
+            SetAttacking(true);
+        }
         m_characterController.Move(transform.forward * m_speed * Time.deltaTime);
 	}
 
@@ -31,7 +35,12 @@ public class Soldier : MonoBehaviour {
 
     }
 
-    void SetAttacking(bool X)
+    public bool IsAttacking()
+    {
+        return m_isAttacking;
+    }
+
+    public void SetAttacking(bool X)
     {
         m_isAttacking = X;
         return;
